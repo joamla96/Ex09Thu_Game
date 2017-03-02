@@ -19,6 +19,7 @@ namespace Core {
 			this.BlankChar = BlankChar;
 
 			this.Board = new char[this.Width, this.Height];
+			this.DrawMap();
 		}
 
 		public char[,] DrawMap() {			
