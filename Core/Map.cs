@@ -8,10 +8,10 @@ namespace Core {
 	public class Map {
 		public int Width { get; private set; }
 		public int Height { get; private set; }
-		char[,] Board;
+		public char[,] Board { get; private set; }
 		public char BlankChar { get; set; }
 
-		public List<IUnit> Units;
+		public List<IUnit> Units = new List<IUnit>();
 
 		public Map(int Width, int Height, char BlankChar) {
 			this.Width = Width;
@@ -36,10 +36,8 @@ namespace Core {
 		}
 
 		public bool isFree(int X, int Y) {
-			if (Board[X, Y] == null) return true;
+			if (Board[X, Y] == this.BlankChar) return true;
 			else return false;
 		}
-
-
 	}
 }

@@ -6,7 +6,7 @@ using System.Threading;
 using System.Windows.Input;
 
 namespace Core {
-	class Player : IUnit {
+	public class Player : IUnit {
 		public char Symbol { get; private set; }
 		public string Name { get; private set; }
 		public int Life { get; private set; }
@@ -27,6 +27,7 @@ namespace Core {
 			this.PosX = PosX;
 			this.PosY = PosY;
 			this.Life = Life;
+			Map.Units.Add(this);
 
 			this.Init();
 		}
@@ -46,33 +47,35 @@ namespace Core {
 		}
 
 		private void Move() { // Run this in a thread!
-			char Key = char.Parse(Console.ReadKey().ToString());
-			if(Key == this.MoveControls[0]) {
-				// Up
-				int newY = this.PosY++;
-				if(Map.isFree(this.PosX, newY)) {
-					this.PosY = newY;
+			while (this.Alive) {
+				char Key = Console.ReadKey().ToString()[0];
+				if (Key == this.MoveControls[0]) {
+					// Up
+					int newY = this.PosY++;
+					if (Map.isFree(this.PosX, newY)) {
+						this.PosY = newY;
+					}
+				} else if (Key == this.MoveControls[1]) {
+					// Left
+					int newX = this.PosX--;
+					if (Map.isFree(newX, this.PosY)) {
+						this.PosX = newX;
+					}
+				} else if (Key == this.MoveControls[2]) {
+					// Down
+					int newY = this.PosY--;
+					if (Map.isFree(this.PosX, newY)) {
+						this.PosY = newY;
+					}
+				} else if (Key == this.MoveControls[3]) {
+					int newX = this.PosX++;
+					if (Map.isFree(newX, this.PosY)) {
+						this.PosX = newX;
+					}
 				}
-			} else if(Key == this.MoveControls[1]) {
-				// Left
-				int newX = this.PosX--;
-				if (Map.isFree(newX, this.PosY)) {
-					this.PosX = newX;
-				}
-			} else if(Key == this.MoveControls[2]) {
-				// Down
-				int newY = this.PosY--;
-				if (Map.isFree(this.PosX, newY)) {
-					this.PosY = newY;
-				}
-			} else if(Key == this.MoveControls[3]) {
-				int newX = this.PosX++;
-				if(Map.isFree(newX, this.PosY)) {
-					this.PosX = newX;
-				}
-			}
 
-			Map.DrawMap();
+				Map.DrawMap();
+			}
 		}
 	}
 }
