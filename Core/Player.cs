@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
+using System.Windows.Input;
 
 namespace Core {
 	class Player : IUnit {
@@ -37,6 +38,12 @@ namespace Core {
 			else return false;
 		}
 
-
+		private void Move() {
+			char Key = char.Parse(Console.ReadKey().ToString());
+			switch(Key) {
+				case this.MoveControls[0]:
+					break;
+			}
+		}
 	}
 }
