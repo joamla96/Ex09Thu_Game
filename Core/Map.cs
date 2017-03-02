@@ -35,6 +35,11 @@ namespace Core {
 			return Board;
 		}
 
+		public bool isFree(int X, int Y) {
+			if (Board[X, Y] == null) return true;
+			else return false;
+		}
+
 
 	}
 }

@@ -27,6 +27,13 @@ namespace Core {
 			this.PosX = PosX;
 			this.PosY = PosY;
 			this.Life = Life;
+
+			this.Init();
+		}
+
+		public void Init() {
+			Thread Mover = new Thread(this.Move);
+			Mover.Start();
 		}
 
 		public void Hit() {
@@ -38,12 +45,34 @@ namespace Core {
 			else return false;
 		}
 
-		private void Move() {
+		private void Move() { // Run this in a thread!
 			char Key = char.Parse(Console.ReadKey().ToString());
-			switch(Key) {
-				case this.MoveControls[0]:
-					break;
+			if(Key == this.MoveControls[0]) {
+				// Up
+				int newY = this.PosY++;
+				if(Map.isFree(this.PosX, newY)) {
+					this.PosY = newY;
+				}
+			} else if(Key == this.MoveControls[1]) {
+				// Left
+				int newX = this.PosX--;
+				if (Map.isFree(newX, this.PosY)) {
+					this.PosX = newX;
+				}
+			} else if(Key == this.MoveControls[2]) {
+				// Down
+				int newY = this.PosY--;
+				if (Map.isFree(this.PosX, newY)) {
+					this.PosY = newY;
+				}
+			} else if(Key == this.MoveControls[3]) {
+				int newX = this.PosX++;
+				if(Map.isFree(newX, this.PosY)) {
+					this.PosX = newX;
+				}
 			}
+
+			Map.DrawMap();
 		}
 	}
 }
