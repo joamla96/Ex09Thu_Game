@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Core {
-	class Map {
+	public class Map {
 		public int Width { get; private set; }
 		public int Height { get; private set; }
 		char[,] Board;
@@ -22,14 +22,14 @@ namespace Core {
 			this.DrawMap();
 		}
 
-		public char[,] DrawMap() {			
+		public char[,] DrawMap() {
 			for (int x = 0; x < this.Width; x++) {
 				for (int y = 0; y < this.Height; y++) {
 					Board[x, y] = this.BlankChar;
 				}
 			}
 
-			foreach(IUnit Unit in Units) {
+			foreach (IUnit Unit in Units) {
 				Board[Unit.PosX, Unit.PosY] = Unit.Symbol;
 			}
 			return Board;
